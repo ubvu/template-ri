@@ -35,5 +35,6 @@ configures Jupytext (used for better version control of notebooks)
 https://jupytext.readthedocs.io/en/latest/index.html
 
 ### configTEMPLATE.json
-- contains private credentials, e.g. api keys
+- contains credentials, e.g. api keys or path to data
+- path to data can be local, but ideally it is shared with the team (sharepoint)
 - make sure to remove the substring TEMPLATE in a local repository
