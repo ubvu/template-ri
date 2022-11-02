@@ -7,6 +7,11 @@ It provides an environment to set up **JupyterLab** with **Jupytext** for better
 The repository has only one subfolder (/scripts) that contains notebooks rendered with Jupytext.\
 *(see below for instructions on how to use the notebooks)*
 
+use the following command to create all notebooks from scripts at once:
+```
+jupytext --sync scripts/*
+```
+
 ### environment.yml
 
 - conda environment with essential libraries
