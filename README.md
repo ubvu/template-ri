@@ -1,16 +1,41 @@
 
 ## RI projects template
 
-This template is the basis for (standard) RI projects. 
-It provides an environment to set up **JupyterLab** with **Jupytext** for better version control.
+### RI workflow
 
-The repository has only one subfolder (/scripts) that contains notebooks rendered with Jupytext.\
-*(see below for instructions on how to use the notebooks)*
+This template is for (standard) RI projects, using **JupyterLab** for development with **Jupytext** for easier version control.
 
-use the following command to create all notebooks from scripts at once:
+The standard workflow is shown in the flowchart below:
+
+
+```mermaid
+flowchart LR
+
+  src1[(OpenAlex etc.)] -. API .-> extr
+
+  subgraph JupyterLab
+  nb[notebook] --> extr(extract)
+  nb --> trans(transform) 
+  end
+
+  extr(extract) --> cache[(cache)]
+  cache --> trans
+
+  nb -. Jupytext .- py(script/markdown) -. git .- gh[(github)]
+
+  subgraph Sharepoint
+  trans --> csv(.csv)
+  end
+
+  csv -. Query .- model(Data model)
+
+  subgraph Power BI
+  model --> vis(Visualisations)
+  end
 ```
-jupytext --sync scripts/*
-```
+
+The repository has only one subfolder (/scripts) that contains converted notebooks (in markdown format).\
+*(see jupytext section below for instructions on how to use the notebooks)*
 
 ### environment.yml
 
@@ -30,12 +55,18 @@ https://docs.conda.io/en/latest/miniconda.html
 
 ### jupytext.toml
 
-configures Jupytext (used for better version control of notebooks)
+Configures Jupytext
 
-- /scripts contains plain text notebooks (metadata has been removed)
+- /scripts contains converted notebooks; metadata is removed so that it does not interfere with git
+- the markdown format allows github to render the notebook as it would any other .md file
 - when opened as a notebook (in JupyterLab), Jupytext creates an .ipynb file under /notebooks
-- this notebook can be run and modified and when saved, the plain text notebook under /scripts is modified (and metadata stripped)
+- this notebook can be run and modified and when saved, the notebook is converted and saved under /scripts
 - the notebooks themselves are gitignored
+
+use the following command to create all notebooks from scripts at once:
+```
+jupytext --sync scripts/*
+```
 
 https://jupytext.readthedocs.io/en/latest/index.html
 
