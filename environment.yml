@@ -1,5 +1,5 @@
 name: ri
-  channels:
+channels:
   - conda-forge
   - defaults
   - bioconda
